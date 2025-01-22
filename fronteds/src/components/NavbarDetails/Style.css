@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+button {
+  font-family: "Inter", sans-serif;
+}
+:root {
+  --offcanvas-width: 270px;
+  --topNavbarHeight: 56px;
+}
+.sidebar-nav {
+  width: var(--offcanvas-width) !important;
+  color: antiquewhite ;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+}
+.sidebar-link .right-icon {
+  display: inline-flex;
+}
+.sidebar-link[aria-expanded="true"] .right-icon {
+  transform: rotate(180deg);
+}
+/* .sidebar-nav .nav-link a {
+  color: aliceblue !important;
+  text-decoration: none;
+  font-size: 20px;
+} */
+.active {
+  background-color: blue !important;
+}
+.active:hover{
+  background-color: rgb(143, 139, 139);
+}
+.nav1:hover{
+  background-color: aqua;
+  color: blue;
+}
+@media (min-width: 992px) {
+  
+  main {
+    margin-left: var(--offcanvas-width);
+  }
+  /* this is to remove the backdrop */
+  .offcanvas-backdrop::before {
+    display: none;
+  }
+  .sidebar-nav {
+    -webkit-transform: none;
+    transform: none !important;
+    visibility: visible !important;
+    height: calc(100% - var(--topNavbarHeight)) !important;
+    top: var(--topNavbarHeight) !important;
+  }
+  .serach1{
+    margin-top: "120px";
+  }
+}
