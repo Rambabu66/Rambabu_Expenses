@@ -123,7 +123,7 @@ const forgotPassword = async (req, res) => {
       from: "rambabukovvuri0@gmail.com",
       to: email,
       subject: "Reset Your password",
-      text: `http://localhost:3010/auth/reset-password/${user._id}/${jwtToken}`,
+      text: `http://localhost:5001/auth/reset-password/${user._id}/${jwtToken}`,
     };
     await transporter.sendMail(receiver);
     return res.status(200).json({
