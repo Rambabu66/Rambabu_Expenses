@@ -1,9 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 
 const UserModel = require("../Models/User");
-const { hashPassword } = require("../HashPassowrds");
+// const { hashPassword } = require("../HashPassowrds");
 
 const signup = async (req, res) => {
   try {
@@ -94,89 +94,89 @@ const deleteUsers = async (req, res) => {
   } catch (error) {}
 };
 
-const forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await UserModel.findOne({ email: email });
-    const errorMsgemail = "user Not Existed";
-    if (!user) {
-      return res.status(400).json({ message: errorMsgemail, success: false });
-    }
+// const forgotPassword = async (req, res) => {
+//   try {
+//     const { email } = req.body;
+//     const user = await UserModel.findOne({ email: email });
+//     const errorMsgemail = "user Not Existed";
+//     if (!user) {
+//       return res.status(400).json({ message: errorMsgemail, success: false });
+//     }
 
-    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "24h",
-    });
-    const link = `http://localhost:3010/auth/resetPassword/${user._id}/${jwtToken}`;
-    console.log(link);
+//     const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+//       expiresIn: "24h",
+//     });
+//     const link = `http://localhost:3010/auth/resetPassword/${user._id}/${jwtToken}`;
+//     console.log(link);
 
-    var transporter = nodemailer.createTransport({
-      service: "gmail",
-      secure: true,
+//     var transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       secure: true,
 
-      auth: {
-        user: "rambabukovvuri93@gmail.com",
-        pass: "myerndxsztzsyekb",
-      },
-    });
+//       auth: {
+//         user: "rambabukovvuri93@gmail.com",
+//         pass: "myerndxsztzsyekb",
+//       },
+//     });
 
-    const receiver = {
-      from: "rambabukovvuri0@gmail.com",
-      to: email,
-      subject: "Reset Your password",
-      text: `http://localhost:5001/auth/reset-password/${user._id}/${jwtToken}`,
-    };
-    await transporter.sendMail(receiver);
-    return res.status(200).json({
-      message: "Password reset link send successfully on your gmail account",
-      success: true,
-      // link
-    });
-  } catch (error) {
-    return res.status(500).send({ message: "Something went wrong" });
-  }
-};
+//     const receiver = {
+//       from: "rambabukovvuri0@gmail.com",
+//       to: email,
+//       subject: "Reset Your password",
+//       text: `http://localhost:5001/auth/reset-password/${user._id}/${jwtToken}`,
+//     };
+//     await transporter.sendMail(receiver);
+//     return res.status(200).json({
+//       message: "Password reset link send successfully on your gmail account",
+//       success: true,
+//       // link
+//     });
+//   } catch (error) {
+//     return res.status(500).send({ message: "Something went wrong" });
+//   }
+// };
 
-const resetPassword = async (req, res) => {
-  try {
-    const { id, jwtToken } = req.params;
-    console.log(id);
+// const resetPassword = async (req, res) => {
+//   try {
+//     const { id, jwtToken } = req.params;
+//     console.log(id);
 
-    const { password } = req.body;
+//     const { password } = req.body;
 
-    if (!password) {
-      return res.status(400).send({ message: "Please provide password" });
-    }
+//     if (!password) {
+//       return res.status(400).send({ message: "Please provide password" });
+//     }
 
-    const decode = jwt.verify(jwtToken, process.env.JWT_SECRET);
+//     const decode = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-    const user = await UserModel.findOne({ email: decode.email, });
+//     const user = await UserModel.findOne({ email: decode.email, });
 
-    const newhashPassword = await hashPassword(password);
+//     const newhashPassword = await hashPassword(password);
 
-    user.password = newhashPassword;
-    await user.save();
+//     user.password = newhashPassword;
+//     await user.save();
 
-    return res.status(200).send({ message: "Password reset successfully" });
-  } catch (error) {
-    return res.status(500).send({ message: "Something went wrong" });
-  }
-};
+//     return res.status(200).send({ message: "Password reset successfully" });
+//   } catch (error) {
+//     return res.status(500).send({ message: "Something went wrong" });
+//   }
+// };
 
-const resetGetPassword1 = async (req, res) => {
-  const { id, jwtToken } = req.params;
-  console.log(req.params);
-  const oldUser = await UserModel.findOne({ id: id });
-  if (!oldUser) {
-    return res.json({ status: "User Not Exists!!" });
-  }
-  try {
-    const verify = jwt.verify(jwtToken, process.env.JWT_SECRET);
-    res.send({ email: verify.email, status: "Verified" });
-  } catch (error) {
-    console.log(error);
-    res.send("Not Verified");
-  }
-};
+// const resetGetPassword1 = async (req, res) => {
+//   const { id, jwtToken } = req.params;
+//   console.log(req.params);
+//   const oldUser = await UserModel.findOne({ id: id });
+//   if (!oldUser) {
+//     return res.json({ status: "User Not Exists!!" });
+//   }
+//   try {
+//     const verify = jwt.verify(jwtToken, process.env.JWT_SECRET);
+//     res.send({ email: verify.email, status: "Verified" });
+//   } catch (error) {
+//     console.log(error);
+//     res.send("Not Verified");
+//   }
+// };
 
 module.exports = {
   signup,
@@ -184,8 +184,8 @@ module.exports = {
   getUsers,
   getUsersiD,
   deleteUsers,
-  forgotPassword,
-  resetPassword,
-  resetGetPassword1,
+  // forgotPassword,
+  // resetPassword,
+  // resetGetPassword1,
   // changePassword
 };
