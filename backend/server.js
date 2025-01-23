@@ -8,7 +8,7 @@ require("./Database/Database")
 // app.set("view engine", "ejs");
 
 // port number 
-const port = process.env.port;
+const port = process.env.PORT;
 
 // Router
 const bodyParser = require("body-parser");
